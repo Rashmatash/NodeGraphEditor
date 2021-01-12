@@ -1,0 +1,123 @@
+﻿<!--
+    Copyright (c) Arash Khatami
+    Distributed under the MIT license. See the LICENSE file in the project root for more information.
+-->
+<UserControl x:Class="NodeGraphEditor.Editors.GraphEditorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:v="clr-namespace:NodeGraphEditor.Editors"
+             mc:Ignorable="d" Focusable="True"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.CommandBindings>
+        <CommandBinding Command="{x:Static v:GraphEditorCommands.DeleteNodeCommand}" Executed="DeleteNodes"/>
+        <CommandBinding Command="{x:Static v:GraphEditorCommands.FocusNodeCommand}" Executed="FocusNode"/>
+        <CommandBinding Command="{x:Static v:GraphEditorCommands.SelectAllCommand}" Executed="SelectAll"/>
+        <CommandBinding Command="{x:Static v:GraphEditorCommands.GroupNodesCommand}" Executed="GroupNodes"/>
+        <CommandBinding Command="{x:Static v:GraphEditorCommands.UngroupNodesCommand}" Executed="UngroupNodes"/>
+    </UserControl.CommandBindings>
+
+    <UserControl.Background>
+        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+            <LinearGradientBrush.GradientStops>
+                <GradientStop Color="DimGray" Offset="0"/>
+                <GradientStop Color="#ff3f3f3f" Offset="1"/>
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+    </UserControl.Background>
+
+    <Grid>
+        <Grid ClipToBounds="True"
+              MouseLeftButtonDown="Grid_Mouse_LBD"
+              MouseLeftButtonUp="Grid_Mouse_LBU"
+              MouseRightButtonDown="Grid_Mouse_RBD"
+              MouseRightButtonUp="Grid_Mouse_RBU"
+              PreviewMouseMove="Grid_Mouse_Move"
+              MouseWheel="Grid_Mouse_Wheel">
+            <Grid.Background>
+                <ImageBrush ImageSource="pack://application:,,,/NodeGraphEditor;component/Resources/GraphEditor/bg_grid_black.png"
+                            TileMode="Tile" Viewport="0,0,100,100" ViewportUnits="Absolute" Opacity="0.4"
+                            x:Name="bgImage"/>
+            </Grid.Background>
+            <Grid.LayoutTransform>
+                <ScaleTransform ScaleX="{Binding ScaleFactor}" ScaleY="{Binding ScaleFactor}"/>
+            </Grid.LayoutTransform>
+
+            <Canvas>
+                <Grid Canvas.Left="{Binding PanOffset.X}" Canvas.Top="{Binding PanOffset.Y}">
+                    <!-- Group nodes -->
+                    <ItemsControl ItemsSource="{Binding Groups}" SnapsToDevicePixels="True">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding TopLeft.X}"/>
+                                <Setter Property="Canvas.Top" Value="{Binding TopLeft.Y}"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding}"
+                                          MouseLeftButtonDown="GroupNode_Mouse_LBD"
+                                          MouseMove="GroupNode_Mouse_Move"
+                                          MouseLeftButtonUp="GroupNode_Mouse_LBU"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <!-- Transitions -->
+                    <ItemsControl ItemsSource="{Binding Nodes}" SnapsToDevicePixels="True">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <v:TransitionCollectionView MouseLeftButtonDown="Transition_Mouse_LDB"
+                                                            MouseMove="Transition_Mouse_Move"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <!-- Nodes -->
+                    <ItemsControl ItemsSource="{Binding Nodes}" SnapsToDevicePixels="True">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left" Value="{Binding TopLeft.X}"/>
+                                <Setter Property="Canvas.Top" Value="{Binding TopLeft.Y}"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding}" 
+                                          MouseLeftButtonDown="Node_Mouse_LBD"
+                                          MouseMove="Node_Mouse_Move"
+                                          MouseLeftButtonUp="Node_Mouse_LBU"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+                <!-- Box-selection rectangle -->
+                <Canvas>
+                    <Rectangle Width="100" Height="100" Stroke="White"
+                           Fill="#ff7eb4ea" Opacity="0.2"
+                           Name="selectionBox" Visibility="Collapsed"/>
+                </Canvas>
+            </Canvas>
+        </Grid>
+        <!-- Zoom label -->
+        <Label Foreground="LightGray"
+               FontSize="32" FontFamily="Impact" Margin="10,0,0,0"
+               Width="164" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top"
+               x:Name="zoomLabel" Opacity="0" IsHitTestVisible="False"/>
+    </Grid>
+</UserControl>

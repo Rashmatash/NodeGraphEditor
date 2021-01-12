@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorDemo", "EditorDemo\EditorDemo.csproj", "{1AED6BE5-32A2-478E-BB79-D2C4DE0D8B91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeGraphEditor", "NodeGraphEditor\NodeGraphEditor.csproj", "{B0C108B7-D046-483E-8E8B-31D692DAD4F2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1AED6BE5-32A2-478E-BB79-D2C4DE0D8B91}.Debug|x64.ActiveCfg = Debug|x64
+		{1AED6BE5-32A2-478E-BB79-D2C4DE0D8B91}.Debug|x64.Build.0 = Debug|x64
+		{1AED6BE5-32A2-478E-BB79-D2C4DE0D8B91}.Release|x64.ActiveCfg = Release|x64
+		{1AED6BE5-32A2-478E-BB79-D2C4DE0D8B91}.Release|x64.Build.0 = Release|x64
+		{B0C108B7-D046-483E-8E8B-31D692DAD4F2}.Debug|x64.ActiveCfg = Debug|x64
+		{B0C108B7-D046-483E-8E8B-31D692DAD4F2}.Debug|x64.Build.0 = Debug|x64
+		{B0C108B7-D046-483E-8E8B-31D692DAD4F2}.Release|x64.ActiveCfg = Release|x64
+		{B0C108B7-D046-483E-8E8B-31D692DAD4F2}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A5A055C-2E77-4C4D-A9F5-AD3C3DC803BB}
+	EndGlobalSection
+EndGlobal

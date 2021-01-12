@@ -1,0 +1,56 @@
+﻿<!--
+    Copyright (c) Arash Khatami
+    Distributed under the MIT license. See the LICENSE file in the project root for more information.
+-->
+<UserControl x:Class="NodeGraphEditor.Editors.NodePickerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:v="clr-namespace:NodeGraphEditor.Editors" KeyDown="OnKeyDown"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" IsVisibleChanged="OnVisibilityChanged"
+             d:DesignHeight="300" d:DesignWidth="300" Focusable="True">
+
+    <UserControl.Resources>
+        <Style TargetType="ListBoxItem" x:Key="NodeListBoxItemStyle">
+            <EventSetter Event="MouseDoubleClick" Handler="OnDoubleClick"/>
+            <Setter Property="Foreground" Value="LightGray"/>
+        </Style>
+    </UserControl.Resources>
+    <Canvas Background="Transparent" MouseDown="OnCanvas_Mouse_Down">
+        <Border CornerRadius="3" Background="#ff2d2d2d" 
+                BorderBrush="#ff3e3e3e"
+                BorderThickness="1" x:Name="pickerBorder"
+                Width="300" Height="300" Focusable="True">
+            <DockPanel Margin="5">
+                <TextBlock Text="Material Nodes" DockPanel.Dock="Top" FontWeight="Bold"
+                           Foreground="LightGray"/>
+                <Grid DockPanel.Dock="Top" Margin="0,5">
+                    <TextBox x:Name="searchBox"
+                             Text="{Binding SearchPhrase, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Search..." Padding="0" Margin="5,0" IsHitTestVisible="False"
+                           Foreground="#ff3e3e3e"
+                           FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Path=Text, ElementName=searchBox}"
+                                                 Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <ListBox Background="#ff262626" Foreground="LightGray"
+                         ItemsSource="{Binding FilteredNodes.View}"
+                         DisplayMemberPath="Item1"
+                         ItemContainerStyle="{StaticResource NodeListBoxItemStyle}"/>
+
+            </DockPanel>
+        </Border>
+    </Canvas>
+</UserControl>

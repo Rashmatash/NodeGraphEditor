@@ -1,0 +1,18 @@
+﻿<!--
+    Copyright (c) Arash Khatami
+    Distributed under the MIT license. See the LICENSE file in the project root for more information.
+-->
+<Application x:Class="EditorDemo.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:EditorDemo"
+             xmlns:ge="clr-namespace:NodeGraphEditor.Editors;assembly=NodeGraphEditor"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/NodeGraphEditor;component/Dictionaries/GraphEditorNodeTypes.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
